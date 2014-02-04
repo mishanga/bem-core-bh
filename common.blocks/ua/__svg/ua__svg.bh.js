@@ -2,7 +2,6 @@ module.exports = function(bh) {
 
     bh.match('ua', function(ctx) {
         ctx.content([
-            ctx.content(),
             ';(function(d,e,c,r,n,w,v,f){' +
                 'e=d.documentElement;' +
                 'c="className";' +
@@ -14,7 +13,8 @@ module.exports = function(bh) {
                 'v=d.createElement("div");' +
                 'v.innerHTML="<svg/>";' +
                 'e[c]+=" ua_inlinesvg_"+((v[f]&&v[f].namespaceURI)==w?"yes":"no");' +
-            '})(document);'
+            '})(document);',
+            ctx.content()
         ], true);
     });
 
