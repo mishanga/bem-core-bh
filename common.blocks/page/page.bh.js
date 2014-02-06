@@ -2,12 +2,16 @@ module.exports = function(bh) {
 
     bh.match('page', function(ctx, json) {
         ctx.tag('body');
-        ctx.mix({ elem : 'body' });
+        ctx.content([
+            ctx.content(),
+            json.scripts
+        ], true);
 
         return [
-            { elem : 'doctype' },
+            json.doctype || '<!DOCTYPE html>',
             {
-                elem : 'root',
+                tag : 'html',
+                cls : 'ua_js_no',
                 content : [
                     {
                         elem : 'head',
@@ -15,6 +19,7 @@ module.exports = function(bh) {
                             { tag : 'meta', attrs : { charset : 'utf-8' } },
                             { tag : 'title', content : json.title },
                             { block : 'ua' },
+                            json.styles,
                             json.head,
                             json.favicon? { elem : 'favicon', url : json.favicon } : '',
                         ]
@@ -23,16 +28,6 @@ module.exports = function(bh) {
                 ]
             }
         ];
-    });
-
-    bh.match('page__root', function(ctx) {
-        ctx.bem(false);
-        ctx.tag('html');
-        ctx.cls('ua_js_no ua_css_standard');
-    });
-
-    bh.match('page__doctype', function(ctx, json) {
-        return json.doctype || '<!DOCTYPE html>';
     });
 
     bh.match('page__head', function(ctx) {

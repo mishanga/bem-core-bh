@@ -5,10 +5,10 @@ module.exports = function(bh) {
             json['x-ua-compatible'] === false ?
                 false :
                 {
-                    elem : 'meta',
+                    tag : 'meta',
                     attrs : {
                         'http-equiv' : 'X-UA-Compatible',
-                        'content' : json['x-ua-compatible'] || 'IE=edge'
+                        content : json['x-ua-compatible'] || 'IE=edge'
                     }
                 },
             ctx.content()
